@@ -1,0 +1,7 @@
+django
+black
+isort
+pylint
+pylint-django
+mypy
+django-stubs
