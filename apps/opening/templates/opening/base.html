@@ -22,21 +22,28 @@
 </head>
 
 <body>
+    {% block header %}
     <header class="header">
         <div class="container">
             <div class="header__inner">
-                <div class="header__logo">ChumBucket</div>
-
+                <div class="header__logo">{{ title }}</div>
                 <nav>
-                    <a class="nav__link active" href="#">about us</a>
-                    <a class="nav__link" href="#">download</a>
-                    <a class="nav__link" href="#">blog</a>
-                    <a class="nav__link" href="#">Q&amp;A</a>
-                    <a class="nav__link" href="#">contact</a>
+                    {% for menu_el in header_menu %}
+                        {% if forloop.first%}
+                            <a class="nav__link active" href="{% url menu_el.url_name %}">{{menu_el.title}}</a>
+                        {% else %}
+                            {% if menu_el.url_name == '#'%}
+                                <a class="nav__link" href="#">{{menu_el.title}}</a>
+                            {% else %}
+                                <a class="nav__link" href="{% url menu_el.url_name %}">{{menu_el.title}}</a>
+                            {% endif%}
+                        {% endif%}
+                    {% endfor %}
                 </nav>
             </div>
         </div>
     </header>
+    {% endblock %}
     {% block content %}
     {% endblock %}
 </body>
