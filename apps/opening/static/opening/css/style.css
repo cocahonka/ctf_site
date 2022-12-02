@@ -1,0 +1,309 @@
+    {
+        % load static %
+    }
+
+    body {
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    *,
+    *:before,
+    *:after {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin: 0;
+    }
+
+
+    /* Container */
+    .container {
+        width: 100%;
+        max-width: 1150px;
+        margin: 0 auto;
+        min-width: 0;
+    }
+
+
+    /* Header */
+    .header {
+        widows: 100%;
+        padding-top: 30px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+
+    .header__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header__logo {
+        font-size: 30px;
+        font-weight: bold;
+        color: #333;
+    }
+
+
+    /* Intro */
+    .intro {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: url("{% static 'opening/images/intro.png' %}");
+        /*color #ffe1bd*/
+        width: 100%;
+        height: 100vh;
+
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+
+    .intro__inner {
+        width: 100%;
+        max-width: 800px;
+        margin: 0 auto;
+        min-width: 0;
+        text-align: center;
+    }
+
+    .intro__slider__item {
+        min-width: 0;
+        outline: none;
+        /*display: none;*/
+    }
+
+    .intro__title {
+        font-family: 'Kaushan Script', cursive;
+        color: #333;
+        font-size: 80px;
+        /*text-transform: lowercase;*/
+        line-height: 1;
+    }
+
+    .intro__title:after {
+        content: '';
+        display: block;
+        height: 3px;
+        width: 60px;
+        margin: 30px auto;
+
+        background-color: #333;
+    }
+
+    .intro__suptitle {
+        color: #333;
+        font-size: 60px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+
+    /* Nav */
+    .nav {
+        font-size: 18px;
+        font-weight: lighter;
+        text-transform: lowercase;
+    }
+
+    .nav__link {
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 15px;
+        position: relative;
+
+        color: #989898;
+        text-decoration: none;
+
+        transition: color .2s linear;
+    }
+
+    .nav__link:after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 3px;
+
+        background-color: #333;
+        opacity: 0;
+        /*display: none;*/
+
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 1;
+
+        transition: opacity .2s linear;
+    }
+
+    .nav__link:hover {
+        color: #333;
+    }
+
+    .nav__link:hover:after {
+        opacity: 1;
+        /*display: block;*/
+    }
+
+    .nav__link.active:after {
+        opacity: 1;
+    }
+
+    .nav__link.active {
+        color: #333;
+    }
+
+
+    /* Button */
+    .btn {
+        outline: none;
+        display: inline-block;
+        vertical-align: top;
+        padding: 8px 30px;
+
+        border: 3px solid #333;
+
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        transition: all .2s linear;
+
+    }
+
+    .btn:hover {
+        background-color: #333;
+        color: #fff;
+    }
+
+
+    /* Slider */
+    .sub__intro {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .sub__intro__inner {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .sub__intro__slider__item {
+        width: 20%;
+        padding: 20px 0;
+        position: relative;
+
+        border-top: 3px solid #333;
+        opacity: .7;
+
+        font-size: 20px;
+        color: #333;
+    }
+
+    .sub__intro__slider__item.active {
+        opacity: 1;
+    }
+
+    .sub__intro__slider__item.active::before {
+        content: '';
+        display: block;
+        width: 70px;
+        height: 3px;
+
+        background-color: #f38181;
+
+        position: absolute;
+        top: -3px;
+        left: 0;
+        z-index: 1;
+    }
+
+    .sub__intro__slider__num {
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    /* Слайдер */
+    .slick-slider {}
+
+    /* Слайдер запущен */
+    .slick-slider.slick-initialized {}
+
+    /* Слайдер с точками */
+    .slick-slider.slick-dotted {}
+
+    /* Ограничивающая оболочка */
+    .slick-list {
+        overflow: hidden;
+    }
+
+    /* Лента слайдов */
+    .slick-track {
+        display: flex;
+    }
+
+    /* Слайд */
+    .slick-slide {}
+
+    /* Слайд активный (показывается) */
+    .slick-slide.slick-active {}
+
+    /* Слайд основной */
+    .slick-slide.slick-current {}
+
+    /* Слайд по центру */
+    .slick-slide.slick-center {}
+
+    /* Клонированный слайд */
+    .slick-slide.slick-cloned {}
+
+    /* Стрелка */
+    .slick-arrow {}
+
+    /* Стрелка влево */
+    .slick-arrow.slick-prev {}
+
+    /* Стрелка вправо */
+    .slick-arrow.slick-next {}
+
+    /* Стрелка не активная */
+    .slick-arrow.slick-disabled {}
+
+    /* Точки (булиты) */
+    .slick-dots {}
+
+    .slick-dots li {}
+
+    /* Активная точка */
+    .slick-dots li.slick-active {}
+
+    /* Элемент точки */
+    .slick-dots li button {}
