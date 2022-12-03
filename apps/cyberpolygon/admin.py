@@ -4,7 +4,7 @@ from .models import *
 
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ("id", "category", "title", "author", "complexity", "is_published")
+    list_display = ("id", "title", "category", "author", "complexity", "is_published")
     list_display_links = ("id", "title")
     search_fields = ("title", "content")
     list_editable = ("is_published",)
