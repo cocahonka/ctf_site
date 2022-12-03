@@ -6,3 +6,5 @@ pylint-django
 mypy
 django-stubs
 pillow
+django-crispy-forms
+crispy-bootstrap5
