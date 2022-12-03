@@ -17,11 +17,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from ctf import settings
+from main import settings
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("apps.opening.urls")),
+    path("", include("apps.cyberpolygon.urls")),
 ]
 
 if settings.DEBUG:
