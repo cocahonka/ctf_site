@@ -4,6 +4,14 @@ from django.db import models
 from django.urls import reverse
 
 
+def task_upload_to(instance, filename):
+    return "tasks/{0}/{1}/{2}".format(
+        instance.category.slug,
+        instance.pk,
+        filename,
+    )
+
+
 class Task(models.Model):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
@@ -14,7 +22,8 @@ class Task(models.Model):
         verbose_name="Сложность",
     )
     category = models.ForeignKey("Category", on_delete=models.PROTECT, verbose_name="Категория")
-    image = models.ImageField(upload_to="images/%Y/%m/%d/", blank=True, null=True, verbose_name="Изображение")
+    image = models.ImageField(upload_to=task_upload_to, blank=True, null=True, verbose_name="Изображение")
+    attached_file = models.FileField(upload_to=task_upload_to)
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, blank=True, verbose_name="Автор")
     is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
@@ -25,6 +34,18 @@ class Task(models.Model):
 
     def get_absolute_url(self):
         return reverse("task", kwargs={"task_id": self.pk})
+
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            saved_image = self.image
+            saved_attached_file = self.attached_file
+            self.image = None
+            self.attached_file = None
+            super(Task, self).save(*args, **kwargs)
+            self.image = saved_image
+            self.attached_file = saved_attached_file
+
+        super(Task, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = "Задание"
