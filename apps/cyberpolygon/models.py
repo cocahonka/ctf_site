@@ -6,6 +6,7 @@ from django.urls import reverse
 
 class Task(models.Model):
     title = models.CharField(max_length=255, verbose_name="Заголовок")
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     content = models.TextField(verbose_name="Контент")
     flag = models.CharField(max_length=100)
     complexity = models.PositiveSmallIntegerField(
@@ -33,6 +34,7 @@ class Task(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=100, db_index=True, verbose_name="Название")
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
 
     def __str__(self):
         return self.name
