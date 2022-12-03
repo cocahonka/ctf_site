@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.cyberpolygon",
+    "apps.cyberpolygon.apps.CyberpolygonConfig",
 ]
 
 MIDDLEWARE = [
