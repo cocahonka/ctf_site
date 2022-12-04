@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 def profile_upload_to(instance, filename):
-    return f"profiles/{instance.pk}/{filename}"
+    return f"profiles/{instance.user.username}/{filename}"
 
 
 class Profile(models.Model):
