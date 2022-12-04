@@ -10,6 +10,9 @@
           <div class="media-body">
             <h2 class="account-heading">{{ user.username }}</h2>
             <p class="text-secondary">{{ user.email }}</p>
+            {% for category in user.profile.category.all %}
+            <p class="text-primary">{{category}}</p>
+            {% endfor %}
           </div>
         </div>
     </div>
