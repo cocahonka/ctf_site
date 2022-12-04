@@ -8,7 +8,3 @@ def opening(request: HttpRequest):
 
 def cyberpolygon(request: HttpRequest):
     return render(request, "cyberpolygon/index.html")
-
-
-def login(request: HttpRequest):
-    return HttpResponse("Войти")
