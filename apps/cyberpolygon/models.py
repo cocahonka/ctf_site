@@ -23,7 +23,7 @@ class Task(models.Model):
     )
     category = models.ForeignKey("Category", on_delete=models.PROTECT, verbose_name="Категория")
     image = models.ImageField(upload_to=task_upload_to, blank=True, null=True, verbose_name="Изображение")
-    attached_file = models.FileField(upload_to=task_upload_to)
+    attached_file = models.FileField(upload_to=task_upload_to, verbose_name="Файл к заданию")
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, blank=True, verbose_name="Автор")
     is_published = models.BooleanField(default=True, verbose_name="Опубликовано")
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
