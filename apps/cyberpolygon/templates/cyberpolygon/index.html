@@ -1,57 +1,59 @@
 {% extends "cyberpolygon/base.html" %}
 {% block content %}
 <div class="container">
-<div class="row">
-  <div class="col-md-8">
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-          {{ message }}
-        </div>
-      {% endfor %}
-    {% endif %}
-    <div class="tasks">
-    {% for task in tasks %}
-        <article class="media content-section">
-          <div class="media-body">
-            <div class="article-metadata">
-              <a class="mr-2" href="#">{{ task.author }}</a>
-              <small class="text-muted">{{ task.time_create|date:"F d, Y" }}</small>
-              <small class="text-primary">{{ task.category }}</small>
-            </div>
-            <h2><a class="article-title" href="#">{{ task.title }}</a></h2>
-            {% if task.image %}
-            <div class="row">
-              <div class="col-md-4">
-                  <p><img class="img-thumbnail img-fluid" src="{{task.image.url}}" /></p>
-              </div>
-            </div>
-            {% endif %}
-            {% autoescape on %}
-            <p class="article-content">{{task.content|linebreaks|truncatewords:150}}</p>
-            {% endautoescape %}
+  <div class="row">
+    <div class="col-md-8">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">
+            {{ message }}
           </div>
-        </article>
-    {% endfor %}
+        {% endfor %}
+      {% endif %}
+      <div class="tasks">
+      {% for task in tasks %}
+          <article class="d-flex content-section">
+            <img class="me-3 rounded-circle article-img" src="{{ task.author.profile.image.url }}"></img>
+            <div class="media-body media-right">
+              <div class="article-metadata">
+                <a class="mr-2" href="#">{{ task.author }}</a>
+                <small class="text-muted">{{ task.time_create|date:"F d, Y" }}</small>
+                <small class="text-primary">{{ task.category }}</small>
+              </div>
+              <h2><a class="article-title" href="#">{{ task.title }}</a></h2>
+              {% if task.image %}
+              <div class="row">
+                <div class="col-md-4">
+                    <p><img class="img-thumbnail img-fluid" src="{{task.image.url}}"></img></p>
+                </div>
+              </div>
+              {% endif %}
+              {% autoescape on %}
+              <p class="article-content">{{task.content|linebreaks|truncatewords:150}}</p>
+              {% endautoescape %}
+            </div>
+          </article>
+      {% endfor %}
+      </div>
     </div>
-  </div>
-  <div class="col-md-4">
-    <div class="content-section">
-      <h3>Категории заданий</h3>
-      <p class='text-muted'>Доступные вашему профилю
-        <ul class="list-group">
-          {% if categories %}
-            {% for category in categories %}
-            <li class="list-group-item list-group-item-light">{{category}}</li>
-            {% endfor %}
-          {% else %}
-          <p class='text-muted'>У вас нету категорий</p>
-          {% endif %}
+    <div class="col-md-4">
+      <div class="content-section">
+        <h3>Категории заданий</h3>
+        <p class='text-muted'>Доступные вашему профилю
+          <ul class="list-group">
+            {% if categories %}
+              <li class="list-group-item list-group-item-light">Все категории</li>
+              {% for category in categories %}
+              <li class="list-group-item list-group-item-light">{{category}}</li>
+              {% endfor %}
+            {% else %}
+            <p class='text-muted'>У вас нету категорий</p>
+            {% endif %}
 
-        </ul>
-      </p>
+          </ul>
+        </p>
+      </div>
     </div>
   </div>
-</div>
 </div>
 {% endblock content %}
