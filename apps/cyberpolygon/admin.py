@@ -13,9 +13,9 @@ class TaskAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("id", "name")
-    list_display_links = ("id", "name")
-    search_fields = ("id", "name")
+    list_display = ("name", "id")
+    list_display_links = ("name", "id")
+    search_fields = ("name", "id")
     prepopulated_fields = {"slug": ("name",)}
 
 

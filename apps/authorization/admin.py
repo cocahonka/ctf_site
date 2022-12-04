@@ -4,7 +4,8 @@ from .models import *
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    pass
+    exclude = ["user"]
+    filter_horizontal = ["category"]
 
 
 admin.site.register(Profile, ProfileAdmin)
