@@ -18,7 +18,9 @@ def regions_changed(sender, **kwargs):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Пользователь")
-    image = models.ImageField(default="profiles/default.jpg", upload_to=profile_upload_to, verbose_name="Аватарка")
+    image = models.ImageField(
+        default="profiles/defaults/user.jpg", upload_to=profile_upload_to, verbose_name="Аватарка"
+    )
     category = models.ManyToManyField(Category, verbose_name="Категории")
 
     def __str__(self):
