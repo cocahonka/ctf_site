@@ -14,6 +14,6 @@ def opening(request: HttpRequest):
 def cyberpolygon(request: HttpRequest):
     profile = Profile.objects.get(user=request.user)
     categories = profile.category.all()
-    tasks = Task.objects.filter(category__in=categories)
+    tasks = Task.objects.filter(category__in=categories, is_published=True)
     context = {"tasks": tasks, "categories": categories}
     return render(request, "cyberpolygon/index.html", context=context)
