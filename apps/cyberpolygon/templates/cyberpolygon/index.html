@@ -1,6 +1,7 @@
 {% extends "cyberpolygon/base.html" %}
 {% block content %}
-{% load static %}
+{% load cyberpolygon_tags %}
+{% get_categories user as categories %}
 <div class="container">
   <div class="row">
     <div class="col-md-8">
@@ -12,57 +13,13 @@
         {% endfor %}
       {% endif %}
       <div class="tasks">
-      {% if not user.profile.is_verified %}
-        <div class="alert alert-warning">
-          Дождитесь верификации вашего профиля от администратора
-        </div>
-      {% else %}
-        {% if not tasks %}
-        <div class="alert alert-warning">
-          Пока что заданий по данной категории не существует
-        </div>
-        {% else %}
-          {% for task in tasks %}
-              <article class="d-flex content-section">
-                {% if task.author.profile.image.url is not none %}
-                <img class="me-3 rounded-circle article-img" src="{{task.author.profile.image.url}}"></img>
-                {% else %}
-                <img class="me-3 rounded-circle article-img" src="{% static 'cyberpolygon/images/deleted_user.jpg' %}"></img>
-                {% endif %}
-                <div class="media-body media-right">
-                  <div class="article-metadata">
-                      {% if task.author is not none %}
-                        {{ task.author }}
-                      {% else %}
-                        Deleted user
-                      {% endif %}
-                    <small class="text-muted">{{ task.time_create|date:"F d, Y" }}</small>
-                    <small class="text-primary">{{ task.category }}</small>
-                  </div>
-                  <h2><a class="article-title" href="{{task.get_absolute_url}}">{{ task.title }}</a></h2>
-                  {% if task.image %}
-                  <div class="row">
-                    <div class="col-md-4">
-                        <p><img class="img-thumbnail img-fluid" src="{{task.image.url}}"></img></p>
-                    </div>
-                  </div>
-                  {% endif %}
-                  {% autoescape on %}
-                  <p class="article-content">
-                    {{task.content|linebreaks|truncatewords:150}}
-                  </p>
-                  {% endautoescape %}
-                  <button
-                    class="btn btn-primary float-end"
-                    type="button"
-                    onclick="location.href='{{task.get_absolute_url}}'">
-                      Открыть
-                  </button>
-                </div>
-              </article>
-          {% endfor %}
-        {% endif %}
-      {% endif %}
+          {% if not user.profile.is_verified %}
+              <div class="alert alert-warning">
+              Дождитесь верификации вашего профиля от администратора
+              </div>
+          {% else %}
+              {% show_tasks categories category_id %}
+          {% endif %}
       </div>
     </div>
     <div class="col-md-4">
@@ -70,24 +27,7 @@
         <h3>Категории заданий</h3>
         <p class='text-muted'>Доступные вашему профилю
           <ul class="list-group">
-            {% if categories %}
-                {% if category_selected == 0 %}
-                    <li class="list-group-item list-group-item-light selected">Все категории</li>
-                {% else %}
-                    <li class="list-group-item list-group-item-light"><a href="{% url 'cyberpolygon' %}">Все категории</a></li>
-                {% endif %}
-
-                {% for category in categories %}
-                    {% if category.pk == category_selected%}
-                        <li class="list-group-item list-group-item-light selected">{{category}}</li>
-                    {% else %}
-                        <li class="list-group-item list-group-item-light"><a href="{{ category.get_absolute_url }}">{{category}}</a></li>
-                    {% endif %}
-                {% endfor %}
-            {% else %}
-            <p class='text-muted'>У вас нету категорий</p>
-            {% endif %}
-
+            {% show_categories categories category_id %}
           </ul>
         </p>
       </div>

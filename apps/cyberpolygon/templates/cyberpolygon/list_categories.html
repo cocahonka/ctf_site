@@ -1,0 +1,17 @@
+{% if categories %}
+    {% if category_id == 0 %}
+        <li class="list-group-item list-group-item-light selected">Все категории</li>
+    {% else %}
+        <li class="list-group-item list-group-item-light"><a href="{% url 'cyberpolygon' %}">Все категории</a></li>
+    {% endif %}
+
+    {% for category in categories %}
+        {% if category.pk == category_id %}
+            <li class="list-group-item list-group-item-light selected">{{category}}</li>
+        {% else %}
+            <li class="list-group-item list-group-item-light"><a href="{{ category.get_absolute_url }}">{{category}}</a></li>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <p class='text-muted'>У вас нету категорий</p>
+{% endif %}

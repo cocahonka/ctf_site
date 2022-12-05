@@ -12,13 +12,8 @@ def opening(request: HttpRequest):
 
 @login_required
 def cyberpolygon(request: HttpRequest):
-    profile = Profile.objects.get(user=request.user)
-    categories = profile.category.all()
-    tasks = Task.objects.filter(category__in=categories, is_published=True)
     context = {
-        "tasks": tasks,
-        "categories": categories,
-        "category_selected": 0,
+        "category_id": 0,
     }
     return render(request, "cyberpolygon/index.html", context=context)
 
@@ -30,14 +25,8 @@ def show_task(request: HttpRequest):
 
 @login_required
 def show_category(request: HttpRequest, category_id):
-    profile = Profile.objects.get(user=request.user)
-    categories = profile.category.all()
-    tasks = Task.objects.filter(category_id=category_id, is_published=True)
-
     context = {
-        "tasks": tasks,
-        "categories": categories,
-        "category_selected": category_id,
+        "category_id": category_id,
     }
 
     return render(request, "cyberpolygon/index.html", context=context)
