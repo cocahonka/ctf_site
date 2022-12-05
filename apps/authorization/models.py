@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -7,8 +9,14 @@ from django.urls import reverse
 from apps.cyberpolygon.models import Category
 
 
-def profile_upload_to(instance, filename):
-    return f"profiles/{instance.user.username}/{filename}"
+def profile_avatar_upload_to(instance, filename):
+    _, extension = os.path.splitext(filename)
+    return f"profiles/{instance.user.username}/avatar{extension}"
+
+
+def profile_student_card_upload_to(instance, filename):
+    _, extension = os.path.splitext(filename)
+    return f"profiles/{instance.user.username}/student_card{extension}"
 
 
 def regions_changed(sender, **kwargs):
@@ -17,14 +25,14 @@ def regions_changed(sender, **kwargs):
             raise ValidationError("Нелья выбрать больше 3 категорий")
 
 
-# TODO add student card field
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Пользователь")
     image = models.ImageField(
-        default="profiles/defaults/user.jpg", upload_to=profile_upload_to, verbose_name="Аватарка"
+        default="profiles/defaults/user.jpg", upload_to=profile_avatar_upload_to, verbose_name="Аватарка"
     )
     category = models.ManyToManyField(Category, verbose_name="Категории")
     is_verified = models.BooleanField(default=False, verbose_name="Верефецирован")
+    student_card = models.ImageField(upload_to=profile_student_card_upload_to, verbose_name="Студенческий  билет")
 
     def __str__(self):
         return self.user.username
