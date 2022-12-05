@@ -4,8 +4,10 @@
 *.pyc
 __pycache__
 db.sqlite3
-media
-!media/profiles/default.jpg
+
+media/profiles/*
+media/tasks/*
+!media/profiles/defaults/
 
 # Backup files #
 *.bak

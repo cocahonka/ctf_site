@@ -21,6 +21,8 @@ from django.urls import include, path
 from apps.authorization import views as authorization_views
 from main import settings
 
+admin.site.site_header = "Админ-панель киберполигона"
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("apps.cyberpolygon.urls")),
