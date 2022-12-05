@@ -5,8 +5,9 @@ from .models import *
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    fields = ("user", "category", "image", "get_html_image")
-    list_display = ("user", "get_html_image")
+    fields = ("user", "is_verified", "category", "image", "get_html_image")
+    list_display = ("user", "is_verified", "get_html_image")
+    list_editable = ("is_verified",)
     readonly_fields = ("user", "get_html_image")
     filter_horizontal = ("category",)
 

@@ -17,12 +17,14 @@ def regions_changed(sender, **kwargs):
             raise ValidationError("Нелья выбрать больше 3 категорий")
 
 
+# TODO add student card field
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Пользователь")
     image = models.ImageField(
         default="profiles/defaults/user.jpg", upload_to=profile_upload_to, verbose_name="Аватарка"
     )
     category = models.ManyToManyField(Category, verbose_name="Категории")
+    is_verified = models.BooleanField(default=False, verbose_name="Верефецирован")
 
     def __str__(self):
         return self.user.username
