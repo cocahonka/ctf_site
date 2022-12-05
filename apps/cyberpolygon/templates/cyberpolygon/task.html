@@ -1,35 +1,35 @@
 {% extends "cyberpolygon/base.html" %}
 {% block content %}
 <div class="container d-flex content-section">
-        {% if task.author.profile.image.url is not none %}
-            <img class="me-3 rounded-circle article-img" src="{{task.author.profile.image.url}}"></img>
-        {% else %}
-            {% load static %}
-            <img class="me-3 rounded-circle article-img" src="{% static 'cyberpolygon/images/deleted_user.jpg' %}"></img>
-        {% endif %}
-
-        <div class="media-body media-right">
-            <div class="article-metadata">
-                {% if task.author is not none %}
-                    {{ task.author }}
-                {% else %}
-                    Deleted user
-                {% endif %}
-                <small class="text-muted">{{ task.time_create|date:"F d, Y" }}</small>
-                <small class="text-primary">{{ task.category }}</small>
-            </div>
-            <h2><a class="article-title" href="{{task.get_absolute_url}}">{{ task.title }}</a></h2>
-            {% if task.image %}
-                <div class="row">
-                    <div class="col-md-4">
-                        <p><img class="img-thumbnail img-fluid" src="{{task.image.url}}"></img></p>
-                    </div>
-                </div>
+    {% if task.author.profile.image.url is not none %}
+        <img class="me-3 rounded-circle article-img" src="{{task.author.profile.image.url}}"></img>
+    {% else %}
+        {% load static %}
+        <img class="me-3 rounded-circle article-img" src="{% static 'cyberpolygon/images/deleted_user.jpg' %}"></img>
+    {% endif %}
+    <div class="media-body media-right">
+        <div class="article-metadata">
+            {% if task.author is not none %}
+                {{ task.author }}
+            {% else %}
+                Удалённый пользователь
             {% endif %}
-            {% autoescape on %}
-            <p class="article-content">{{task.content|linebreaks}}</p>
-            {% endautoescape %}
-            <button class="btn btn-primary float-end" type="button" onclick="location.href='{{task.get_absolute_url}}'">Открыть</button>
+            <small class="text-muted">{{ task.time_create|date:"F d, Y" }}</small>
+            <small class="text-muted">Сложность: {{ task.complexity }}</small>
+            <small class="text-primary"><a href="{{task.category.get_absolute_url}}">{{ task.category }}</a></small>
+        </div>
+        <h2>{{ task.title }}</h2>
+        {% autoescape on %}
+        <p class="article-content">{{task.content|linebreaks}}</p>
+        {% endautoescape %}
+        {% if task.image %}
+            <div class="row">
+                <div class="col-md-10">
+                    <p><img class="img-thumbnail img-fluid" src="{{task.image.url}}"></img></p>
+                </div>
             </div>
+        {% endif %}
+        <a href="{{task.attached_file.url}}" download><div class="btn btn-primary ">Файлы к заданию <i class='bx bxs-download bx-tada-hover'></i></div></a>
+    </div>
 </div>
 {% endblock content %}
