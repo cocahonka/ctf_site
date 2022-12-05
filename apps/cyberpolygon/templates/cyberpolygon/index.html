@@ -1,5 +1,6 @@
 {% extends "cyberpolygon/base.html" %}
 {% block content %}
+{% load static %}
 <div class="container">
   <div class="row">
     <div class="col-md-8">
@@ -23,14 +24,22 @@
         {% else %}
           {% for task in tasks %}
               <article class="d-flex content-section">
-                <img class="me-3 rounded-circle article-img" src="{{ task.author.profile.image.url }}"></img>
+                {% if task.author.profile.image.url is not none %}
+                <img class="me-3 rounded-circle article-img" src="{{task.author.profile.image.url}}"></img>
+                {% else %}
+                <img class="me-3 rounded-circle article-img" src="{% static 'cyberpolygon/images/deleted_user.jpg' %}"></img>
+                {% endif %}
                 <div class="media-body media-right">
                   <div class="article-metadata">
-                    <a class="mr-2" href="#">{{ task.author }}</a>
+                      {% if task.author is not none %}
+                        {{ task.author }}
+                      {% else %}
+                        Deleted user
+                      {% endif %}
                     <small class="text-muted">{{ task.time_create|date:"F d, Y" }}</small>
                     <small class="text-primary">{{ task.category }}</small>
                   </div>
-                  <h2><a class="article-title" href="#">{{ task.title }}</a></h2>
+                  <h2><a class="article-title" href="{{task.get_absolute_url}}">{{ task.title }}</a></h2>
                   {% if task.image %}
                   <div class="row">
                     <div class="col-md-4">
@@ -39,8 +48,16 @@
                   </div>
                   {% endif %}
                   {% autoescape on %}
-                  <p class="article-content">{{task.content|linebreaks|truncatewords:150}}</p>
+                  <p class="article-content">
+                    {{task.content|linebreaks|truncatewords:150}}
+                  </p>
                   {% endautoescape %}
+                  <button
+                    class="btn btn-primary float-end"
+                    type="button"
+                    onclick="location.href='{{task.get_absolute_url}}'">
+                      Открыть
+                  </button>
                 </div>
               </article>
           {% endfor %}
@@ -54,10 +71,19 @@
         <p class='text-muted'>Доступные вашему профилю
           <ul class="list-group">
             {% if categories %}
-              <li class="list-group-item list-group-item-light">Все категории</li>
-              {% for category in categories %}
-              <li class="list-group-item list-group-item-light">{{category}}</li>
-              {% endfor %}
+                {% if category_selected == 0 %}
+                    <li class="list-group-item list-group-item-light selected">Все категории</li>
+                {% else %}
+                    <li class="list-group-item list-group-item-light"><a href="{% url 'cyberpolygon' %}">Все категории</a></li>
+                {% endif %}
+
+                {% for category in categories %}
+                    {% if category.pk == category_selected%}
+                        <li class="list-group-item list-group-item-light selected">{{category}}</li>
+                    {% else %}
+                        <li class="list-group-item list-group-item-light"><a href="{{ category.get_absolute_url }}">{{category}}</a></li>
+                    {% endif %}
+                {% endfor %}
             {% else %}
             <p class='text-muted'>У вас нету категорий</p>
             {% endif %}
