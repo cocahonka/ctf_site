@@ -1,6 +1,9 @@
+from string import Template
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.utils.safestring import mark_safe
 
 from apps.cyberpolygon.models import Category
 
@@ -14,10 +17,11 @@ class UserRegisterForm(UserCreationForm):
         widget=forms.CheckboxSelectMultiple,
         label="Категория (1-3)",
     )
+    student_card = forms.ImageField(required=True, label="Студенческий билет")
 
     class Meta:
         model = User
-        fields = ["username", "email", "password1", "password2", "category"]
+        fields = ["username", "email", "password1", "password2", "category", "student_card"]
 
     def __init__(self, *args, **kwargs):
         super(UserRegisterForm, self).__init__(*args, **kwargs)
@@ -26,6 +30,7 @@ class UserRegisterForm(UserCreationForm):
     def save(self, *args, **kwargs):
         user = super(UserRegisterForm, self).save(commit=False, *args, **kwargs)
         user._category = self.cleaned_data["category"]
+        user._student_card = self.cleaned_data["student_card"]
         user.save()
 
     def clean_category(self):

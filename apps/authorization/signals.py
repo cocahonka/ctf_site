@@ -10,12 +10,15 @@ from .models import Profile
 @receiver(post_save, sender=User)
 def create_profile(sender, instance: User, created, **kwargs):
     if created:
-        attrs_needed = ["_category"]
+        attrs_needed = ["_category", "_student_card"]
         if instance.is_superuser:
             profile = Profile.objects.create(user=instance, image="profiles/defaults/admin.jpg")
             profile.category.set(Category.objects.all())
         if all(hasattr(instance, attr) for attr in attrs_needed):
-            profile = Profile.objects.create(user=instance)
+            profile = Profile.objects.create(
+                user=instance,
+                student_card=instance._student_card,
+            )
             profile.category.set(instance._category)
 
 
