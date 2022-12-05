@@ -12,8 +12,9 @@ def profile_upload_to(instance, filename):
 
 
 def regions_changed(sender, **kwargs):
-    if kwargs["instance"].category.count() > 3:
-        raise ValidationError("Нелья выбрать больше 3 категорий")
+    if not kwargs["instance"].user.is_superuser:
+        if kwargs["instance"].category.count() > 3:
+            raise ValidationError("Нелья выбрать больше 3 категорий")
 
 
 class Profile(models.Model):
