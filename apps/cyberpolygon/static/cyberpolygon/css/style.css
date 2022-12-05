@@ -125,3 +125,13 @@
         color: #777;
         text-decoration: none;
     }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-image: none;
+    }
+
+
+    .text-sm-start {
+        left: 100px;
+    }
