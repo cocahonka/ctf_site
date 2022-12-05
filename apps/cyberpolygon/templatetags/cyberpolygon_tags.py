@@ -13,18 +13,20 @@ def get_categories(user: User):
 
 
 @register.inclusion_tag("cyberpolygon/list_categories.html")
-def show_categories(categories, category_id):
+def show_categories(categories, category_slug):
     return {
         "categories": categories,
-        "category_id": category_id,
+        "category_slug": category_slug,
     }
 
 
 @register.inclusion_tag("cyberpolygon/list_tasks.html")
-def show_tasks(categories, category_id):
-    if category_id == 0:
+def show_tasks(categories, category_slug):
+
+    if not category_slug:
         tasks = Task.objects.filter(category__in=categories, is_published=True)
         return {"tasks": tasks}
     else:
-        tasks = Task.objects.filter(category_id=category_id, is_published=True)
+        category = Category.objects.get(slug=category_slug)
+        tasks = Task.objects.filter(category=category, is_published=True)
         return {"tasks": tasks}

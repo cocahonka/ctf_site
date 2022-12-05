@@ -33,7 +33,7 @@ class Task(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("task", kwargs={"task_id": self.pk})
+        return reverse("task", kwargs={"task_slug": self.slug})
 
     def save(self, *args, **kwargs):
         if self.pk is None:
@@ -61,7 +61,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("category", kwargs={"category_id": self.pk})
+        return reverse("category", kwargs={"category_slug": self.slug})
 
     class Meta:
         verbose_name = "Категория"

@@ -18,7 +18,7 @@
               Дождитесь верификации вашего профиля от администратора
               </div>
           {% else %}
-              {% show_tasks categories category_id %}
+              {% show_tasks categories category_slug %}
           {% endif %}
       </div>
     </div>
@@ -27,7 +27,7 @@
         <h3>Категории заданий</h3>
         <p class='text-muted'>Доступные вашему профилю
           <ul class="list-group">
-            {% show_categories categories category_id %}
+            {% show_categories categories category_slug %}
           </ul>
         </p>
       </div>
