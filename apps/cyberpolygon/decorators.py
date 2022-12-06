@@ -24,15 +24,7 @@ def categories_match_required(**filters):
             if category_slug:
                 category_filters = dict(filters.get("category_filters", []), slug=category_slug)
                 category = get_object_or_404(user_categories, **category_filters)
-                return view_func(
-                    request,
-                    *args,
-                    **dict(
-                        kwargs,
-                        category=category,
-                        categories=user_categories,
-                    )
-                )
+                return view_func(request, *args, **dict(kwargs, category=category, categories=user_categories))
 
             if task_slug:
                 task_filters = dict(filters.get("task_filters", []), slug=task_slug)
@@ -40,15 +32,7 @@ def categories_match_required(**filters):
                 category_slug = task.category.slug
 
                 if user_categories.filter(slug=category_slug).exists():
-                    return view_func(
-                        request,
-                        *args,
-                        **dict(
-                            kwargs,
-                            task=task,
-                            categories=user_categories,
-                        )
-                    )
+                    return view_func(request, *args, **dict(kwargs, task=task, categories=user_categories))
                 else:
                     raise Http404()
 
