@@ -1,7 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
-
-from apps.cyberpolygon.models import Category, Task
+from django.shortcuts import render
 
 from .decorators import *
 
@@ -19,7 +17,7 @@ def cyberpolygon(request):
 
 
 @login_required
-@categories_match_required
+@categories_match_required()
 def show_category(request, category_slug, **kwargs):
     context = {
         "category_slug": category_slug,
@@ -31,7 +29,7 @@ def show_category(request, category_slug, **kwargs):
 
 
 @login_required
-@categories_match_required
+@categories_match_required(task_filters=dict(is_published=True))
 def show_task(request, **kwargs):
     task = kwargs.get("task")
 
