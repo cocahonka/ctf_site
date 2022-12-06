@@ -17,6 +17,7 @@ def cyberpolygon(request):
 
 
 @login_required
+@verified_required
 @categories_match_required()
 def show_category(request, category_slug, **kwargs):
     context = {
@@ -29,6 +30,7 @@ def show_category(request, category_slug, **kwargs):
 
 
 @login_required
+@verified_required
 @categories_match_required(task_filters=dict(is_published=True))
 def show_task(request, **kwargs):
     task = kwargs.get("task")

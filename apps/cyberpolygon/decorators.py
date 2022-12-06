@@ -1,7 +1,17 @@
 from django.http import Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from .models import Task
+
+
+def verified_required(view_func):
+    def wrap(request, *args, **kwargs):
+        if request.user.profile.is_verified:
+            return view_func(request, *args, **kwargs)
+        else:
+            return redirect("cyberpolygon")
+
+    return wrap
 
 
 def categories_match_required(**filters):
