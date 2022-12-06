@@ -1,7 +1,6 @@
 {% extends "cyberpolygon/base.html" %}
 {% block content %}
 {% load cyberpolygon_tags %}
-{% get_categories user as categories %}
 <div class="container">
   <div class="row">
     <div class="col-md-8">
@@ -18,7 +17,7 @@
               Дождитесь верификации вашего профиля от администратора
               </div>
           {% else %}
-              {% show_tasks categories category_slug %}
+              {% show_tasks categories category %}
           {% endif %}
       </div>
     </div>
